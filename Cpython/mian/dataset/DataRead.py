@@ -35,11 +35,13 @@ def data_read():
 
         play_list = np.stack(play_list)
         os.makedirs("cache", exist_ok=True)
-        np.save(cache_path, Play_list, allow_pickle=True)
+        np.save(cache_path, play_list, allow_pickle=True)
 
     return play_list
 
 Play_list = data_read()
+
+
 
 if __name__ == "__main__":
     print("40个数据分开装,",
@@ -47,11 +49,13 @@ if __name__ == "__main__":
           "2016个采集点做兼容",
           "总共5120组数据")
 
-# print(len(Play_list))
-# print(Play_list[5].data.shape)
-# print(Play_list[5].label.shape)
+    Play_list = data_read()
 
-# i = 1
-# with open('data_preprocessed_python/s'+ '01' + '.dat', 'rb') as file:
-#   subject = pickle.load(file, encoding='latin1')
+    print(len(Play_list))
+    print(Play_list[5].data.shape)
+    print(Play_list[5].label.shape)
+
+    # i = 1
+    # with open('data_preprocessed_python/s'+ '01' + '.dat', 'rb') as file:
+    #   subject = pickle.load(file, encoding='latin1')
 
