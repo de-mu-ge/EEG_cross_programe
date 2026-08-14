@@ -29,11 +29,11 @@ for i, (data, label) in enumerate(dataloader):
     data = np.argmax(data, axis=1)
     data = str(data.tolist()[0])
 
-    label = torch.sigmoid(label).cpu().detach().numpy()
-    label = str(np.argmax(label, axis=1)[0])
+    # label = torch.sigmoid(label).cpu().detach().numpy()
+    # label = str(np.argmax(label, axis=1)[0])
     # print(label)
     saml_list.append(data)
-    saml_list.append(label)
+    saml_list.append(str(int(label)))
 
     json_list.append(saml_list)
 

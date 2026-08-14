@@ -1,5 +1,6 @@
 from torch.utils.data import DataLoader
 from Cpython.mian.dataset.dataset import EegDataset
+# from Cpython.mian.dataset.DataRead import Play
 import torch
 dataset = EegDataset()
 dataloader = DataLoader(dataset, batch_size=32, shuffle=True)
@@ -18,7 +19,7 @@ for epoch in range(10):
         data = data.to(cude)
         labels = labels.to(cude)
 
-        optimizer.zero_grad()
+        optimizer.zero_grad()   
         outputs = model(data)
         loss = criterion(outputs, labels)
         loss.backward()

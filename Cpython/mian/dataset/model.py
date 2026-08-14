@@ -8,7 +8,7 @@ class Moudle(nn.Module):
 
         self.liner1 = nn.Linear(2016, 1)
         self.pool = nn.Flatten()
-        self.liner2 = nn.Linear(40, 4)
+        self.liner2 = nn.Linear(32, 2)
     def forward(self, x):
         x = self.liner1(x)
         # print(x.shape)
