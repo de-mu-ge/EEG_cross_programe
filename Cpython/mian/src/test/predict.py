@@ -5,6 +5,11 @@ import numpy as np
 import os
 import json
 import pickle
+from pathlib import Path
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+# BASE_DIR = Path(__file__).resolve().parent.parent     # 路径解析
+
 # from Cpython.mian.dataset.DataRead import Play
 from torch.utils.data import Dataset, DataLoader
 class Play:
@@ -32,8 +37,10 @@ class Moudle(nn.Module):
         x = self.liner2(x)
         return x
 
-path = sys.argv[1]    # 传入路径
+# path = sys.argv[1]    # 传入路径
 # path = input("Please enter the path of the file: ")
+# print(BASE_DIR / "input")
+# path = BASE_DIR / "input"
 
 def data_read(dataset_path):
     play_list = []
@@ -51,7 +58,7 @@ def data_read(dataset_path):
                     play_list.append(Play(data[i][:,j:j+2016], 0, 0))
     return play_list
 
-Play_list = data_read(path)
+Play_list = data_read(BASE_DIR / "test" / "input")
 
 class EegDataset(Dataset):
     def __init__(self):
@@ -73,7 +80,7 @@ dataset = EegDataset()
 dataloader = DataLoader(dataset, batch_size=1, shuffle=False)
 
 model = Moudle()
-model.load_state_dict(torch.load(r"C:\Users\home and dream\Desktop\ing\EEG\Cpython\mian\src\test\eeg_model.pth"))
+model.load_state_dict(torch.load(BASE_DIR /"test" / "mod" / "eeg_model.pth"))
 model.eval()
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -90,7 +97,7 @@ for i, (data, lable) in enumerate(dataloader):
     out = str(out.tolist()[0])
 
 out = list(map(str, out))
-with open(r"C:\Users\home and dream\Desktop\ing\EEG\Cpython\mian\src\test\out.json", 'w') as f:
+with open(BASE_DIR /"test" / "output" / "out.json", 'w') as f:
     # print(out, file=f)
     json.dump(out, f, indent=4)
 

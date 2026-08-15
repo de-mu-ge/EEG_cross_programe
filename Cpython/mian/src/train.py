@@ -28,7 +28,8 @@ for epoch in range(10):
         # break
 
         if (i + 1) % 10 == 0:
-            print(f'Epoch [{epoch + 1}/10], Step [{i + 1}/{len(dataloader)}], Loss: {loss.item():.4f}')
+            print(f'Epoch [{epoch + 1}/10], Step [{i + 1}/{len(
+                dataloader)}], Loss: {loss.item():.4f}')
 torch.save(model.state_dict(), 'pt/eeg_model.pth')
 print('Model saved to eeg_model.pth')
     
