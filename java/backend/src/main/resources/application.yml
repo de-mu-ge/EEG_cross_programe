@@ -1,0 +1,39 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: neuroai-backend
+  servlet:
+    multipart:
+      max-file-size: 200MB
+      max-request-size: 200MB
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    # 数据库连接可用环境变量覆盖（详见 README）
+    url: ${NEUROAI_DB_URL:jdbc:mysql://localhost:3306/neuroai?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true}
+    username: ${NEUROAI_DB_USERNAME:root}
+    password: ${NEUROAI_DB_PASSWORD:root}
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    banner: false
+    db-config:
+      id-type: auto
+
+neuroai:
+  ai-service:
+    # Python AI 服务地址（FastAPI）
+    base-url: http://localhost:8000
+    connect-timeout-ms: 5000
+    read-timeout-ms: 120000
+  storage:
+    # 上传文件存放目录（相对后端运行目录）
+    upload-dir: ./data/uploads
+
+logging:
+  level:
+    com.neuroai.backend: info

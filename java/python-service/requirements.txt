@@ -1,0 +1,13 @@
+# ===== NEURO-AI Python AI 服务依赖 =====
+# 核心 Web 框架
+fastapi>=0.110
+uvicorn[standard]>=0.29
+python-multipart>=0.0.9
+
+# 数据处理
+numpy>=1.26
+pydantic>=2.6
+python-dotenv>=1.0
+
+# 深度学习（仅真实模型推理模式需要；演示模式可不安装）
+torch>=2.2
