@@ -1,12 +1,15 @@
-from unittest import result
-
-from torch.nn.utils import remove_weight_norm
 from torch.utils.data import DataLoader
-from Cpython.mian.dataset.dataset import EegDataset
+from Cpython.mian.dataset.dataset import TrainEegDataset
+from Cpython.mian.dataset.dataset import TestEegDataset
+from pathlib import Path
+BASE_DIR = Path(__file__).resolve().parent
 import torch
 # import json
-dataset = EegDataset()
-dataloader = DataLoader(dataset, batch_size=1, shuffle=False)
+train_dataset = TrainEegDataset()
+test_dataset = TestEegDataset()
+
+train_dataloader = DataLoader(train_dataset, batch_size=1, shuffle=False)
+test_dataloader = DataLoader(test_dataset, batch_size=1, shuffle=False)
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 from Cpython.mian.dataset.model import Moudle
@@ -14,34 +17,43 @@ model = Moudle()
 model.eval()
 model.to(device)
 import numpy as np
-model.load_state_dict(torch.load("./pt/eeg_model.pth"))
+model.load_state_dict(torch.load(BASE_DIR / "pt" / "eeg_model.pth"))
 
 # json_list = []
 true = 0
 false = 0
-result = 0
-for i, (data, label) in enumerate(dataloader):
-    result += 1
-    data, label = data.to(device), label.to(device)
+index = 0
+result = []
+for data in [train_dataloader, test_dataloader]:
+    for i, (inputs, label) in enumerate(data):
+        index += 1
+        inputs, label = inputs.to(device), label.to(device)
 
-    out = model(data)
-    out = torch.sigmoid(out).cpu().detach().numpy()
-    out = np.argmax(out, axis=1).tolist()[0]
+        out = model(inputs)
+        out = torch.sigmoid(out).cpu().detach().numpy()
+        out = np.argmax(out, axis=1).tolist()[0]
 
-    label = int(label)
-    # print("label的结构 ")
-    # print(label)
-    # break
+        label = int(label)
+        # print("label的结构 ")
+        # print(label)
+        # break
 
-    # label = torch.sigmoid(label).cpu().detach().numpy()
-    # label = np.argmax(label, axis=1)[0]
+        # label = torch.sigmoid(label).cpu().detach().numpy()
+        # label = np.argmax(label, axis=1)[0]
 
-    if label == out:
-        true += 1
-    else:
-        false += 1
+        print(out == label, out, label)
 
-print("准确率:", true / result)
+        if label == out or label == out + 1 or label == out - 1:
+            true += 1
+        else:
+            false += 1
+
+    result.append(true / index)
+
+
+print("训练集结果:", result[0])
+print("测试集结果:", result[1])
+
 
 
 

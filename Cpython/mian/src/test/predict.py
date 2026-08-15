@@ -1,6 +1,6 @@
 import torch
 # import argparse
-import sys
+# import sys
 import numpy as np
 import os
 import json
@@ -79,27 +79,30 @@ class EegDataset(Dataset):
 dataset = EegDataset()
 dataloader = DataLoader(dataset, batch_size=1, shuffle=False)
 
+
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
 model = Moudle()
 model.load_state_dict(torch.load(BASE_DIR /"test" / "mod" / "eeg_model.pth"))
 model.eval()
 
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
 
 model.to(device)
 
-for i, (data, lable) in enumerate(dataloader):
-    data = data.to(device)
-    out = model(data)
-    out = torch.sigmoid(out).cpu().detach().numpy()
+for i, (inputs, label) in enumerate(dataloader):
+    inputs = inputs.to(device)
+    outs = model(inputs)
+    outs = torch.sigmoid(outs).cpu().detach().numpy()
 
     # print("data")
-    out = np.argmax(out, axis=1)
-    out = str(out.tolist()[0])
+    outs = np.argmax(outs, axis=1)
+    outs = str(outs.tolist()[0])
 
-out = list(map(str, out))
+outs = list(map(str, outs))
 with open(BASE_DIR /"test" / "output" / "out.json", 'w') as f:
     # print(out, file=f)
-    json.dump(out, f, indent=4)
+    json.dump(outs, f, indent=4)
 
 print("程序完成")
 

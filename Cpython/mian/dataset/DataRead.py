@@ -6,7 +6,7 @@ from Cpython.mian.dataset.Configs import Config
 dataset_path = Config.dataset_path
 cache_path = Config.cache_path
 
-class Play:
+class Play():
     def __init__(self, data, valence, arousal):
         self.data = data
         self.valence = valence
@@ -46,8 +46,10 @@ def data_read():
                     # print("end")
                     # break
 
-                    valence = name(input[0])
-                    arousal = name(input[1])
+                    valence = int(input[0])
+                    arousal = 0    # 这里先0
+                    # print(valence)
+                    # arousal = name(input[1])
                     for j in range(4):
                         play_list.append(Play(data[i][:,j:j+2016], valence, arousal))
                 #     pass
@@ -62,7 +64,7 @@ def data_read():
 
     return play_list
 
-# Play_list = data_read()
+Play_list = data_read()
 
 
 if __name__ == "__main__":
@@ -77,8 +79,8 @@ if __name__ == "__main__":
     print(Play_list[5].data.shape)
     print(Play_list[7].valence)
     print(Play_list[9].arousal)
-
-    # i = 1
+    #
+    # # i = 1
     # with open('data_preprocessed_python/s'+ '01' + '.dat', 'rb') as file:
     #   subject = pickle.load(file, encoding='latin1')
 """
