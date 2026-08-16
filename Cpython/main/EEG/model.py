@@ -1,4 +1,5 @@
 # import torch
+# import torch
 import torch.nn as nn
 
 # 数据输入格式是 (B, 40, 2016)
@@ -16,6 +17,7 @@ class Moudle(nn.Module):
         # print(x.shape)
         x = self.relu1(x)
         x = self.dropout1(x)
+        # print(x.shape)
         x = self.pool(x)
         # print(x.shape)
         x = self.liner2(x)
