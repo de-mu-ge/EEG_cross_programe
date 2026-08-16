@@ -1,10 +1,10 @@
 <template>
-  <div ref="containerRef" class="brain-canvas"></div>
+  <div ref="containerRef" class="neural-scene"></div>
 </template>
 
 <script setup>
 import { onBeforeUnmount, onMounted, ref } from 'vue'
-import { BrainScene } from '../three/BrainScene'
+import { NeuralScene } from '../three/NeuralScene'
 
 const emit = defineEmits(['formed'])
 
@@ -12,7 +12,7 @@ const containerRef = ref(null)
 let scene = null
 
 onMounted(() => {
-  scene = new BrainScene(containerRef.value, {
+  scene = new NeuralScene(containerRef.value, {
     onFormed: () => emit('formed')
   })
 })
@@ -28,13 +28,13 @@ defineExpose({
 </script>
 
 <style scoped>
-.brain-canvas {
+.neural-scene {
   position: absolute;
   inset: 0;
   overflow: hidden;
 }
 
-.brain-canvas :deep(canvas) {
+.neural-scene :deep(canvas) {
   display: block;
 }
 </style>
