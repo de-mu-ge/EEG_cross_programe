@@ -1,7 +1,7 @@
 from torch.utils.data import Dataset
 print("loading dataset")
 import torch
-from Cpython.mian.dataset.DataRead import data_read
+from Cpython.main.EEG.Dataload.DataRead import data_read
 play_list = data_read()
 print("loading data")
 # print("共计",len(Play_list), "个数据")

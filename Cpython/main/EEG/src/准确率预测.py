@@ -1,6 +1,6 @@
 from torch.utils.data import DataLoader
-from Cpython.mian.dataset.dataset import TrainEegDataset
-from Cpython.mian.dataset.dataset import TestEegDataset
+from Cpython.main.EEG.Dataload.dataset import TrainEegDataset, TestEegDataset
+# from Cpython.mian.dataset.dataset import TestEegDataset
 from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent
 import torch
@@ -12,7 +12,8 @@ train_dataloader = DataLoader(train_dataset, batch_size=1, shuffle=False)
 test_dataloader = DataLoader(test_dataset, batch_size=1, shuffle=False)
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-from Cpython.mian.dataset.model import Moudle
+from Cpython.main.EEG.model import Moudle
+
 model = Moudle()
 model.eval()
 model.to(device)

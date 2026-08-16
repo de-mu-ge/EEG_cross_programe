@@ -2,7 +2,7 @@ import pickle
 import os
 import numpy as np
 # import torch
-from Cpython.mian.dataset.Configs import Config
+from Cpython.main.EEG.Configs import Config
 dataset_path = Config.dataset_path
 cache_path = Config.cache_path
 

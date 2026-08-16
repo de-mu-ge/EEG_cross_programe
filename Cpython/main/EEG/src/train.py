@@ -1,18 +1,19 @@
 # ------------ Train -----------
-from Cpython.mian.dataset.Configs import Config
+from Cpython.main.EEG.Configs import Config
 lrs = Config().lrs
 epochs = Config().epochs
+pth_path = Config().pth_path
 # -------------------------------
 
 from torch.utils.data import DataLoader
-from Cpython.mian.dataset.dataset import TrainEegDataset
+from Cpython.main.EEG.Dataload.dataset import TrainEegDataset
 # from Cpython.mian.dataset.DataRead import Play
 import torch
 dataset = TrainEegDataset()
 dataloader = DataLoader(dataset, batch_size=32, shuffle=True)
 
 cude = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-from Cpython.mian.dataset.model import Moudle
+from Cpython.main.EEG.model import Moudle
 model = Moudle()
 model.train()
 model.to(cude)
@@ -45,6 +46,6 @@ for epoch in range(epochs):
     print("loss:", sum(items) / len(items))
         # if (i + 1) % 10 == 0:
             # print(f'Epoch [{epoch + 1}/10], Step [{i + 1}/{len(dataloader)}], Loss: {loss.item():.4f}')
-torch.save(model.state_dict(), 'pt/eeg_model.pth')
+torch.save(model.state_dict(), pth_path)
 print('Model saved to eeg_model.pth')
     

@@ -1,13 +1,15 @@
 # ------------ Train -----------
-from Cpython.mian.dataset.Configs import Config
+from Cpython.main.EEG.Configs import Config
+# from Cpython.mian.dataset.Configs import Config
 lrs = Config().lrs
 epochs = Config().epochs
 # -------------------------------
 from matplotlib import pyplot as plt
 import numpy as np
 from torch.utils.data import DataLoader
-from Cpython.mian.dataset.dataset import TrainEegDataset, TestEegDataset
+# from Cpython.mian.dataset.dataset import TrainEegDataset, TestEegDataset
 # from Cpython.mian.dataset.DataRead import Play
+from Cpython.main.EEG.Dataload.dataset import TrainEegDataset, TestEegDataset
 import torch
 train_dataset = TrainEegDataset()
 test_dataset = TestEegDataset()
@@ -16,7 +18,8 @@ train_dataloader_iter = DataLoader(train_dataset, batch_size=1, shuffle=False)
 test_dataloader = DataLoader(test_dataset, batch_size=1, shuffle=False)
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-from Cpython.mian.dataset.model import Moudle
+# from Cpython.mian.dataset.model import Moudle
+from Cpython.main.EEG.model import Moudle
 model = Moudle()
 model.train()
 model.to(device)
