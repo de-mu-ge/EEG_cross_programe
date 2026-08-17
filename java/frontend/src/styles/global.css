@@ -13,8 +13,8 @@ body,
 
 body {
   font-family: 'Helvetica Neue', 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
-  background: #05060f;
-  color: #dfe6ff;
+  background: #030303;
+  color: #e8ecef;
   -webkit-font-smoothing: antialiased;
   overflow: hidden;
 }

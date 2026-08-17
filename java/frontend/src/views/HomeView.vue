@@ -1,23 +1,18 @@
 <template>
   <div class="home">
-    <BrainCanvas ref="brainRef" @formed="uploadVisible = true" />
+    <NeuralScene ref="sceneRef" @formed="uploadVisible = true" />
 
-    <header class="home-header">
-      <span class="logo">NEURO·AI</span>
-    </header>
+    <div class="hud hud-top" :class="{ 'hud-hidden': started }">
+      <h1 class="title">NEURO-AI</h1>
+      <p class="subtitle">Decode the hidden signals of human emotion.</p>
+    </div>
 
-    <Transition name="fade">
-      <section v-if="!started" class="hero">
-        <h1 class="hero-title">NEURO·AI</h1>
-        <p class="hero-subtitle">Neural Emotion Recognition System</p>
-        <p class="hero-copy">
-          Understand the mind.<br />
-          Decode human emotions.<br />
-          Through brain waves.
-        </p>
-        <button class="start-btn" @click="onStart">START ANALYSIS</button>
-      </section>
-    </Transition>
+    <div class="hud hud-bottom" :class="{ 'hud-hidden': started }">
+      <button class="start-btn" @click="onStart">START ANALYSIS</button>
+      <p class="hint" :class="{ 'hint-hidden': explored }">
+        move your cursor — you are the only light source
+      </p>
+    </div>
 
     <Transition name="fade">
       <div v-if="uploadVisible" class="upload-overlay">
@@ -28,17 +23,25 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import BrainCanvas from '../components/BrainCanvas.vue'
+import { onBeforeUnmount, ref } from 'vue'
+import NeuralScene from '../components/NeuralScene.vue'
 import UploadZone from '../components/UploadZone.vue'
 
-const brainRef = ref(null)
+const sceneRef = ref(null)
 const started = ref(false)
 const uploadVisible = ref(false)
+const explored = ref(false)
+
+const onFirstMove = () => {
+  explored.value = true
+  window.removeEventListener('pointermove', onFirstMove)
+}
+window.addEventListener('pointermove', onFirstMove)
+onBeforeUnmount(() => window.removeEventListener('pointermove', onFirstMove))
 
 function onStart() {
   started.value = true
-  brainRef.value?.startTransition()
+  sceneRef.value?.startTransition()
 }
 </script>
 
@@ -48,77 +51,89 @@ function onStart() {
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  background:
-    radial-gradient(ellipse 70% 55% at 65% 45%, rgba(48, 56, 130, 0.22), transparent 70%),
-    #05060f;
+  background: #030303;
 }
 
-.home-header {
+.hud {
   position: absolute;
-  top: 0;
   left: 0;
   right: 0;
   z-index: 10;
-  padding: 28px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   pointer-events: none;
+  transition: opacity 0.9s ease;
 }
 
-.logo {
-  font-size: 13px;
-  letter-spacing: 0.45em;
-  color: rgba(190, 200, 245, 0.6);
+.hud-hidden {
+  opacity: 0;
 }
 
-.hero {
-  position: absolute;
-  z-index: 10;
-  left: clamp(40px, 8vw, 120px);
-  top: 50%;
-  transform: translateY(-50%);
-  max-width: 420px;
+.hud-top {
+  top: 8vh;
+  text-align: center;
 }
 
-.hero-title {
-  font-size: clamp(40px, 5vw, 64px);
+.title {
+  margin: 0 0 16px;
+  font-size: clamp(20px, 2.4vw, 30px);
   font-weight: 200;
-  letter-spacing: 0.18em;
-  color: #eef1ff;
-  margin: 0 0 14px;
+  letter-spacing: 0.55em;
+  padding-left: 0.55em; /* 抵消末字符字距，保持视觉居中 */
+  color: rgba(235, 238, 242, 0.92);
 }
 
-.hero-subtitle {
+.subtitle {
+  margin: 0;
   font-size: 12px;
-  letter-spacing: 0.4em;
-  text-transform: uppercase;
-  color: #8ea0ff;
-  margin: 0 0 34px;
+  font-weight: 300;
+  letter-spacing: 0.3em;
+  padding-left: 0.3em;
+  color: rgba(138, 147, 155, 0.75);
 }
 
-.hero-copy {
-  font-size: 15px;
-  font-weight: 300;
-  line-height: 2.1;
-  letter-spacing: 0.12em;
-  color: rgba(200, 208, 240, 0.65);
-  margin: 0 0 44px;
+.hud-bottom {
+  bottom: 9vh;
+  gap: 26px;
 }
 
 .start-btn {
-  padding: 15px 44px;
+  pointer-events: auto;
+  padding: 16px 54px;
   font-size: 12px;
-  letter-spacing: 0.4em;
-  color: #dfe6ff;
+  letter-spacing: 0.45em;
+  padding-left: calc(54px + 0.45em);
+  color: rgba(235, 238, 242, 0.7);
   background: transparent;
-  border: 1px solid rgba(140, 160, 255, 0.45);
-  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 2px;
   cursor: pointer;
-  transition: box-shadow 0.3s, border-color 0.3s, background 0.3s;
+  transition:
+    color 0.4s,
+    border-color 0.4s,
+    box-shadow 0.4s;
 }
 
 .start-btn:hover {
-  border-color: rgba(170, 130, 255, 0.9);
-  background: rgba(90, 90, 220, 0.12);
-  box-shadow: 0 0 24px rgba(110, 110, 255, 0.35);
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.5);
+  box-shadow:
+    0 0 32px rgba(255, 255, 255, 0.1),
+    inset 0 0 14px rgba(255, 255, 255, 0.04);
+}
+
+.hint {
+  margin: 0;
+  font-size: 10px;
+  letter-spacing: 0.32em;
+  padding-left: 0.32em;
+  color: rgba(138, 147, 155, 0.4);
+  transition: opacity 1.2s ease;
+}
+
+.hint-hidden {
+  opacity: 0;
 }
 
 .upload-overlay {
@@ -137,21 +152,11 @@ function onStart() {
 
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.7s ease;
+  transition: opacity 0.8s ease;
 }
 
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
-}
-
-@media (max-width: 768px) {
-  .hero {
-    left: 50%;
-    top: auto;
-    bottom: 8vh;
-    transform: translateX(-50%);
-    text-align: center;
-  }
 }
 </style>

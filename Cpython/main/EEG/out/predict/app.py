@@ -23,4 +23,6 @@ def predict(file: UploadFile = File(...)):
         "result: ": res
     }
 
+# python -m uvicorn app.app:app --port 8000
+
 

@@ -6,6 +6,9 @@
 # ===== 本地工具配置 =====
 .claude/
 
+# ===== 本地备份 =====
+backups/
+
 # ===== Backend =====
 backend/target/
 backend/data/

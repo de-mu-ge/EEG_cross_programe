@@ -55,11 +55,18 @@ EEG_Project/                      # 项目根目录
 ├── frontend/                     # 【前端】Vue3 网页，端口 5173
 │   ├── src/
 │   │   ├── views/HomeView.vue   # 首页（大脑动画 + 上传区）
-│   │   ├── components/          # 组件（BrainCanvas 大脑画布 / UploadZone 上传区）
-│   │   ├── three/BrainScene.js  # ★ Three.js 大脑动画的完整逻辑
+│   │   ├── components/          # 组件（NeuralScene 神经场景 / UploadZone 上传区）
+│   │   ├── three/               # ★ Three.js 大脑动画，按模块拆分
+│   │   │   ├── NeuralScene.js     # 场景主逻辑：把粒子/头部线框/转场组装起来
+│   │   │   ├── HeadWireframe.js   # 头部线框
+│   │   │   ├── ParticleField.js   # 体素粒子场
+│   │   │   ├── PointerLight.js    # 鼠标移动的光点跟随
+│   │   │   ├── StartTransition.js # 开场转场动画
+│   │   │   └── particles/         # 各种形状的粒子生成（脑形/尘形/头形/面板形）
 │   │   ├── api/eeg.js           # 前端调用后端接口的方法（上传 / 查结果）
 │   │   ├── router/index.js      # 路由（只有首页）
 │   │   └── styles/global.css    # 全局样式
+│   ├── scripts/                 # 本地辅助脚本（head-preview 无头预览、verify-home 自检）
 │   ├── vite.config.js           # 前端配置（端口 5173、/api 代理到 8080）
 │   └── package.json             # 前端依赖清单
 ├── python-service/              # 【AI 服务】FastAPI，端口 8000

@@ -84,17 +84,20 @@ async function upload(file) {
   gap: 10px;
   text-align: center;
   cursor: pointer;
-  border: 1px dashed rgba(120, 150, 255, 0.35);
-  border-radius: 18px;
-  background: rgba(10, 14, 32, 0.35);
-  backdrop-filter: blur(6px);
-  transition: border-color 0.25s, background 0.25s;
+  border: 1px dashed rgba(138, 147, 155, 0.35);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.015);
+  transition:
+    border-color 0.3s,
+    box-shadow 0.3s,
+    background 0.3s;
 }
 
 .upload-zone:hover,
 .upload-zone.is-dragover {
-  border-color: rgba(160, 120, 255, 0.8);
-  background: rgba(20, 24, 52, 0.5);
+  border-color: rgba(0, 229, 168, 0.55);
+  background: rgba(0, 229, 168, 0.03);
+  box-shadow: 0 0 36px rgba(0, 229, 168, 0.07);
 }
 
 .upload-input {
@@ -104,11 +107,11 @@ async function upload(file) {
 .upload-hint {
   font-size: 13px;
   letter-spacing: 0.35em;
-  color: #cfd8ff;
+  color: #e8ecef;
 }
 
 .upload-result {
-  color: #9d7bff;
+  color: #00e5a8;
 }
 
 .upload-error {
@@ -118,6 +121,6 @@ async function upload(file) {
 .upload-sub {
   font-size: 11px;
   letter-spacing: 0.2em;
-  color: rgba(160, 175, 220, 0.55);
+  color: rgba(138, 147, 155, 0.6);
 }
 </style>
