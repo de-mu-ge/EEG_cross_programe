@@ -3,7 +3,7 @@ import os
 import numpy as np
 # import torch
 from Cpython.main.EEG.Configs import Config
-dataset_path = Config.dataset_path
+dataset_path = Config.deap_dataset_path
 cache_path = Config.cache_path
 
 class Play():

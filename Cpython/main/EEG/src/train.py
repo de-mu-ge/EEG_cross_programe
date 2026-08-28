@@ -2,7 +2,8 @@
 from Cpython.main.EEG.Configs import Config
 lrs = Config().lrs
 epochs = Config().epochs
-pth_path = Config().pth_path
+eeg_pth_path = Config().eeg_pth_path
+pth_path = eeg_pth_path
 # -------------------------------
 
 from torch.utils.data import DataLoader
@@ -18,7 +19,7 @@ arousal_laoder = DataLoader(arousal_dataset, batch_size=32, shuffle=True)
 dominance_laoder = DataLoader(dominance_dataset, batch_size=32, shuffle=True)
 
 cude = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-from Cpython.main.EEG.model import Moudle
+from Cpython.main.EEG.test_model import Moudle
 
 def train(dataloader, model, index):
     model.train()
