@@ -19,8 +19,12 @@ test_dataloader = DataLoader(test_dataset, batch_size=1, shuffle=False)
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 # from Cpython.mian.dataset.model import Moudle
+
+# from Cpython.main.EEG.src.test.test_model import Model
 from Cpython.main.EEG.model import Moudle
 model = Moudle()
+
+# model = Model()
 model.train()
 model.to(device)
 
