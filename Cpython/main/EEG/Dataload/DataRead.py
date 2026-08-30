@@ -53,7 +53,10 @@ def data_read():
                     # print(valence)
                     # arousal = name(input[1])
                     for j in range(4):
-                        play_list.append(Play(data[i][:,j:j+2016], valence, arousal, dominance))
+                        # 8064 个采样点切成 4 段互不重叠的 2016 点。
+                        # 之前写成 j:j+2016，4 段只平移 1 个点，几乎完全相同，
+                        # 等于把每个试次复制了 4 份，训练精度全靠背数据。
+                        play_list.append(Play(data[i][:, j*2016:(j+1)*2016], valence, arousal, dominance))
                 #     pass
                 # print(subject['labels'].shape)
                 # print(subject['data'].shape)
@@ -77,11 +80,23 @@ if __name__ == "__main__":
 
     Play_list = data_read()
 
-    print(len(Play_list))
-    print(Play_list[19].data.shape)
-    print(Play_list[412].valence)
-    print(Play_list[9].arousal)
-    print(Play_list[10].dominance)
+    print(len(Play_list))       # 5120
+    # print(Play_list[19].data.shape)
+    # print(Play_list[412].valence)
+    # print(Play_list[9].arousal)
+    # print(Play_list[10].dominance)
+
+    labels = []
+    for index in Play_list:
+        labels.append(index.valence)
+
+    print(labels)
+
+
+
+
+
+
     #
     # # i = 1
     # with open('data_preprocessed_python/s'+ '01' + '.dat', 'rb') as file:

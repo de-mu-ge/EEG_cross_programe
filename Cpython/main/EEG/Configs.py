@@ -15,4 +15,4 @@ class Config:
 
 
     lrs : float = 0.001
-    epochs: int = 50
+    epochs: int = 40
