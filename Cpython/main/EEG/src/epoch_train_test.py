@@ -22,18 +22,31 @@ test_dataloader = DataLoader(test_dataset, batch_size=1, shuffle=False)
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 # from Cpython.mian.dataset.model import Moudle
 
+
+
+
+
+# --------------------- 获取模型 -------------------------
 from Cpython.main.EEG.src.test.test_model import Model
+model = Model()
+
 # from Cpython.main.EEG.model import Moudle
-from Cpython.main.EEG.src.test.test_model import DEAPNet
 # model = Moudle()
+
+# from Cpython.main.EEG.src.test.test_model import DEAPNet
 # model = DEAPNet()
 
-model = Model()
+
+
+
+
+
+
 model.train()
 model.to(device)
 
 
-class_counts = torch.tensor([
+class_counts = torch.tensor([       # 加权
     440,   # class 0
     1068,  # class 1
     844,   # class 2

@@ -66,7 +66,6 @@ print("测试集结果:", result[1])
 
 
 
-
     # data= data.to(cude)
     #
     # saml_list = []
