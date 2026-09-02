@@ -1,7 +1,8 @@
 import os
 import random
 import torch
-from Cpython.main.Video.model import VideoModel
+
+from Cpython.src.main.python.youwuyu.Video.model.model import VideoModel
 model = VideoModel()
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model.to(device)
@@ -13,9 +14,9 @@ from torch.utils.data import Dataset, DataLoader
 import cv2
 import numpy as np
 # import scipy.io as sio
-from Cpython.main.Video.Configs import Config
+from Cpython.src.main.python.youwuyu.Video.configs.Configs import Config
 eav_dataset_path = Config.eav_dataset_path
-eav_cache_path = Config.eav_cache_path
+# eav_cache_path = Config.eav_cache_path
 
 
 
@@ -53,7 +54,7 @@ for m in os.listdir(eav_dataset_path):    # 打开 subject 文件夹
         # people_list.append(n)
         path_list.append(os.path.join(eav_dataset_path, m, 'Video', n))
 
-
+# print(len(path_list))         # 8400
 random.shuffle(path_list)
 # input_list = []
 # for o in range(200):
@@ -70,7 +71,7 @@ def add_label(strs):
 
 # -------------- 一站式推理 -------------------
 
-# for i in range(340):   # 340 * 20
+# for i in range(340):   # 8400
 for i in range(10):
     play_list = []
 

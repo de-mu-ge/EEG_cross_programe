@@ -21,7 +21,6 @@ class Model(nn.Module):
         self.BatchNorm2 = nn.BatchNorm2d(32)
         self.relu2 = nn.ReLU()
         self.dropout2 = nn.Dropout(0.1)
-        self.pool0 = nn.MaxPool2d(kernel_size=(3,3), stride=(1,1))
 
 
         self.Conv2d2 = nn.Conv2d(in_channels=32, out_channels=4, kernel_size=(3,3), stride=(1,1))
@@ -29,19 +28,12 @@ class Model(nn.Module):
         self.Conv2d3 = nn.Conv2d(in_channels=4, out_channels=1, kernel_size=(3,3), stride=(1,1))
         self.relu3 = nn.ReLU()
 
-        self.BatchNorm3 = nn.BatchNorm1d(32)
-        self.dropout4 = nn.Dropout(0.1)
-
-        self.pool1 = nn.MaxPool2d(kernel_size=(3,3), stride=(1,1))
+        self.pool = nn.MaxPool2d(kernel_size=(3,3), stride=(1,1))
         self.Flatten = nn.Flatten()
 
-        self.func1 = nn.Linear(in_features=13888, out_features=1024)
-        self.BatchNorm3 = nn.BatchNorm1d(1024)
-        self.func2 = nn.Linear(in_features=1024, out_features=32)
-        self.BatchNorm4 = nn.BatchNorm1d(32)
-        self.func3 = nn.Linear(in_features=32, out_features=10)
-
-        
+        self.func1 = nn.Linear(in_features=13888, out_features=32)
+        self.BatchNorm3 = nn.BatchNorm1d(32)
+        self.func2 = nn.Linear(in_features=32, out_features=10)
 
     def forward(self, x):
 
@@ -64,24 +56,20 @@ class Model(nn.Module):
         data = self.Conv2d1(data)
         data = self.BatchNorm2(data)
         data = self.relu2(data)
-        data = self.pool0(data)
         data = self.dropout2(data)
 
         data = self.Conv2d2(data)
-        data = self.dropout3(data)
         data = self.relu3(data)
         data = self.Conv2d3(data)
-        data = self.dropout4(data)
+        data = self.dropout3(data)
 
-        data = self.pool1(data)
+        data = self.pool(data)
         data = self.Flatten(data)
 
         # print(data.shape)
         data = self.func1(data)
         data = self.BatchNorm3(data)
         data = self.func2(data)
-        data = self.BatchNorm4(data)
-        data = self.func3(data)
 
         return data
 

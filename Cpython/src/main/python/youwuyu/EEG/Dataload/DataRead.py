@@ -2,7 +2,7 @@ import pickle
 import os
 import numpy as np
 # import torch
-from Cpython.main.EEG.Configs import Config
+from Cpython.src.main.python.youwuyu.EEG.configs.Configs import Config
 dataset_path = Config.deap_dataset_path
 cache_path = Config.cache_path
 
@@ -65,7 +65,7 @@ def data_read():
                 # break
 
         play_list = np.stack(play_list)
-        os.makedirs("cache", exist_ok=True)
+        os.makedirs(os.path.dirname(cache_path), exist_ok=True)
         np.save(cache_path, play_list, allow_pickle=True)
 
     return play_list

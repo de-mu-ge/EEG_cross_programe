@@ -1,5 +1,5 @@
 # ------------ Train -----------
-from Cpython.main.EEG.Configs import Config
+from Cpython.src.main.python.youwuyu.EEG.configs.Configs import Config
 lrs = Config().lrs
 epochs = Config().epochs
 eeg_pth_path = Config().eeg_pth_path
@@ -7,7 +7,7 @@ pth_path = eeg_pth_path
 # -------------------------------
 
 from torch.utils.data import DataLoader
-from Cpython.main.EEG.Dataload.dataset import ArousalDataset, ValancedDataset, DominanceDataset
+from Cpython.src.main.python.youwuyu.EEG.Dataload.dataset import ValancedDataset, DominanceDataset, ArousalDataset
 # from Cpython.mian.dataset.DataRead import Play
 import torch
 valance_dataset = DominanceDataset()
@@ -19,7 +19,7 @@ arousal_laoder = DataLoader(arousal_dataset, batch_size=32, shuffle=True)
 dominance_laoder = DataLoader(dominance_dataset, batch_size=32, shuffle=True)
 
 cude = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-from Cpython.main.EEG.test_model import Moudle
+from Cpython.src.main.python.youwuyu.EEG.model.model import Moudle
 
 def train(dataloader, model, index):
     model.train()

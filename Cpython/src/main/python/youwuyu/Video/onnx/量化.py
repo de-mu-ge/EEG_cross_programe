@@ -1,6 +1,6 @@
 import torch
 import onnx
-from Cpython.main.Video.model import VideoModel
+from Cpython.src.main.python.youwuyu.Video.model.model import VideoModel
 from onnxruntime.quantization import quantize_dynamic, QuantType
 
 model = VideoModel()

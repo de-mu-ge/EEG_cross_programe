@@ -3,9 +3,9 @@ import os
 import cv2
 import numpy as np
 import scipy.io as sio
-from Cpython.main.Video.Configs import Config
+from Cpython.src.main.python.youwuyu.Video.configs.Configs import Config
 eav_dataset_path = Config.eav_dataset_path
-eav_cache_path = Config.eav_cache_path
+# eav_cache_path = Config.eav_cache_path
 
 class Play:
     def __init__(self, eeg_data,
@@ -39,35 +39,35 @@ for m in os.listdir(eav_dataset_path):    # 打开 subject 文件夹
 # print(path_list)
 
 def data_read(path_list):
-    if os.path.exists(eav_cache_path):
-          play_list = np.load(eav_cache_path, allow_pickle=True)
-    else:
-        play_list = []
-        for path in path_list:
-            cap = cv2.VideoCapture(path)
+    # if os.path.exists(eav_cache_path):
+    #       play_list = np.load(eav_cache_path, allow_pickle=True)
+    # else:
+    play_list = []
+    for path in path_list:
+        cap = cv2.VideoCapture(path)
 
-            for _ in range(10):
-                video_array = np.zeros([60, 480, 640, 3])
+        for _ in range(10):
+            video_array = np.zeros([60, 480, 640, 3])
 
-                for i in range(60):
-                    ret, frame = cap.read()
-                    # print(ret)
-                    # print(frame.shape)
+            for i in range(60):
+                ret, frame = cap.read()
+                # print(ret)
+                # print(frame.shape)
 
-                    video_array[i] = np.array(frame)
-
-
-                    # print(video_array.shape)
-
-            #         break
-            #     break
-            # break
-                play_list.append(Play(0, video_array, 0, 0))
+                video_array[i] = np.array(frame)
 
 
-        play_list = np.stack(play_list)
-        os.makedirs("cache", exist_ok=True)
-        np.save(eav_cache_path, play_list, allow_pickle=True)
+                # print(video_array.shape)
+
+        #         break
+        #     break
+        # break
+            play_list.append(Play(0, video_array, 0, 0))
+
+
+        # play_list = np.stack(play_list)
+        # os.makedirs("cache", exist_ok=True)
+        # np.save(eav_cache_path, play_list, allow_pickle=True)
 
     return play_list
 

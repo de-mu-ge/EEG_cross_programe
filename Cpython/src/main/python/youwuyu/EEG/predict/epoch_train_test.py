@@ -1,5 +1,5 @@
 # ------------ Train -----------
-from Cpython.main.EEG.Configs import Config
+from Cpython.src.main.python.youwuyu.EEG.configs.Configs import Config
 # from Cpython.mian.dataset.Configs import Config
 lrs = Config().lrs
 epochs = Config().epochs
@@ -11,7 +11,8 @@ import numpy as np
 from torch.utils.data import DataLoader
 # from Cpython.mian.dataset.dataset import TrainEegDataset, TestEegDataset
 # from Cpython.mian.dataset.DataRead import Play
-from Cpython.main.EEG.Dataload.dataset import TrainEegDataset, TestEegDataset
+from Cpython.src.main.python.youwuyu.EEG.Dataload.dataset import TrainEegDataset, TestEegDataset
+# from Cpython.main.EEG.Dataload.dataset import TrainEegDataset, TestEegDataset
 import torch
 train_dataset = TrainEegDataset()
 test_dataset = TestEegDataset()
@@ -27,14 +28,14 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 
 # --------------------- 获取模型 -------------------------
-from Cpython.main.EEG.src.test.test_model import Model
-model = Model()
+from Cpython.src.main.python.youwuyu.EEG.model.model import Moudle
+model = Moudle()
 
-# from Cpython.main.EEG.model import Moudle
-# model = Moudle()
+# from Cpython.src.main.python.youwuyu.EEG.model.test_model import Model
+# model = Model()
 
-# from Cpython.main.EEG.src.test.test_model import DEAPNet
-# model = DEAPNet()
+# from Cpython.src.main.python.youwuyu.EEG.model.test_model import DEAPNet
+# model = Model()
 
 
 
@@ -139,12 +140,12 @@ for epoch in range(epochs):
             # else:
             #     false += 1
 
-            if index % 100 == 0:
-                # true = true + 1
-                print("")
-                print("")
+            # if index % 100 == 0:
+            #     # true = true + 1
+            #     print("")
+            #     print("")
                 # print(str(data))
-                print(label, out)
+                # print(label, out)
 
 
             if label == out or label == out + 1 or label == out - 1:
