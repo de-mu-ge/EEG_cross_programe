@@ -1,12 +1,14 @@
+# 数据结构 (32, 2016)
 import pickle
 import os
 import numpy as np
 # import torch
 from Cpython.src.main.python.youwuyu.EEG.configs.Configs import Config
 dataset_path = Config.deap_dataset_path
-cache_path = Config.cache_path
+cache_path = Config.deap_eeg_cache_path
+cross_cache_path = Config.cross_deap_cache_path
 
-class Play():
+class DeapPlay:
     def __init__(self, data, valence, arousal, dominance):
         self.data = data
         self.valence = valence
@@ -57,7 +59,7 @@ def data_read():
                         # 8064 个采样点切成 4 段互不重叠的 2016 点。
                         # 之前写成 j:j+2016，4 段只平移 1 个点，几乎完全相同，
                         # 等于把每个试次复制了 4 份，训练精度全靠背数据。
-                        play_list.append(Play(data[i][:, j*2016:(j+1)*2016], valence, arousal, dominance))
+                        play_list.append(DeapPlay(data[i][:, j*2016:(j+1)*2016], valence, arousal, dominance))
                 #     pass
                 # print(subject['labels'].shape)
                 # print(subject['data'].shape)
@@ -70,7 +72,52 @@ def data_read():
 
     return play_list
 
-Play_list = data_read()
+# Play_list = data_read()
+
+class CrossDeapPlay:
+    def __init__(self, data, valence):
+        self.data = data
+        self.valence = valence
+
+def cross_deap_read():
+    if os.path.exists(cross_cache_path):
+          play_list = np.load(cross_cache_path, allow_pickle=True)
+    else:
+        play_list = []
+        list_dir = os.listdir(dataset_path)
+        for dirs in list_dir:
+            os_dir = os.path.join(dataset_path, dirs)
+            with open(os_dir, "rb") as f:
+                subject = pickle.load(f, encoding="latin1")
+                label = subject['labels']
+                # print(label)
+                # valence = subject['valence']
+                # print(label.shape)
+                # break
+                data = subject['data'][:,:30]    # 前32个电极为脑电数据                # print(type(data))   # <class 'numpy.ndarray'>
+                for i in range(40):
+                    # print(type(label[i]))
+                    input = label[i].tolist()
+
+                    valence = 0 if int(input[0]) <= 5 else 1
+
+                    for j in range(4):
+                        # 8064 个采样点切成 4 段互不重叠的 2016 点。
+                        # 之前写成 j:j+2016，4 段只平移 1 个点，几乎完全相同，
+                        # 等于把每个试次复制了 4 份，训练精度全靠背数据。
+                        play_list.append(CrossDeapPlay(data[i][:, j*2000:(j+1)*2000].transpose(-1, 0), valence))
+                #     pass
+                # print(subject['labels'].shape)
+                # print(subject['data'].shape)
+                #
+                # break
+
+        play_list = np.stack(play_list)
+        os.makedirs(os.path.dirname(cross_cache_path), exist_ok=True)
+        np.save(cross_cache_path, play_list, allow_pickle=True)
+
+    return play_list
+
 
 
 if __name__ == "__main__":

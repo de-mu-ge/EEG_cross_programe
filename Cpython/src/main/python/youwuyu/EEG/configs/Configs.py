@@ -10,8 +10,12 @@ class Config:
     deap_dataset_path: str = BASE_DIR / "Cpython/src/main/resources/dataset/deap-dataset/data_preprocessed_python"
     eav_dataset_path : str = r"D:\pragrame\now\dataset"
 
-    cache_path: str = BASE_DIR / "Cpython/src/main/resources/cache/deap_cache.npy"
-    eeg_pth_path : str = BASE_DIR / "Cpython/src/main/resources/model_out/eeg_pth"
+    deap_eeg_cache_path: str = BASE_DIR / "Cpython/src/main/resources/cache/deap_eeg_cache.npy"
+    eav_eeg_cache_path: str = BASE_DIR / "Cpython/src/main/resources/cache/eav_eeg_cache.npy"
+    cross_deap_cache_path: str = BASE_DIR / "Cpython/src/main/resources/cache/cross_deap_cache.npy"
+
+    deap_eeg_pth_path : str = BASE_DIR / "Cpython/src/main/resources/model_out/deap_eeg_pth"
+    eav_eeg_pth_path : str = BASE_DIR / "Cpython/src/main/resources/model_out/eeg_pth/eav_eeg_pth"
 
 
     lrs : float = 0.001

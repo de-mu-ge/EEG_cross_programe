@@ -1,5 +1,5 @@
 from torch.utils.data import DataLoader
-from Cpython.src.main.python.youwuyu.EEG.Dataload.dataset import TrainEegDataset, TestEegDataset
+from Cpython.src.main.python.youwuyu.EEG.Dataload.deap_dataset import TrainEegDataset, TestEegDataset
 # from Cpython.mian.dataset.dataset import TestEegDataset
 from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent

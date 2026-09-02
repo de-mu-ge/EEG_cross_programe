@@ -2,12 +2,12 @@
 from Cpython.src.main.python.youwuyu.EEG.configs.Configs import Config
 lrs = Config().lrs
 epochs = Config().epochs
-eeg_pth_path = Config().eeg_pth_path
+eeg_pth_path = Config().deap_eeg_pth_path
 pth_path = eeg_pth_path
 # -------------------------------
 
 from torch.utils.data import DataLoader
-from Cpython.src.main.python.youwuyu.EEG.Dataload.dataset import ValancedDataset, DominanceDataset, ArousalDataset
+from Cpython.src.main.python.youwuyu.EEG.Dataload.deap_dataset import ValancedDataset, DominanceDataset, ArousalDataset
 # from Cpython.mian.dataset.DataRead import Play
 import torch
 valance_dataset = DominanceDataset()

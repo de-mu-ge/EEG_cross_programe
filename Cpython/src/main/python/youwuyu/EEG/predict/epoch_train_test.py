@@ -11,7 +11,7 @@ import numpy as np
 from torch.utils.data import DataLoader
 # from Cpython.mian.dataset.dataset import TrainEegDataset, TestEegDataset
 # from Cpython.mian.dataset.DataRead import Play
-from Cpython.src.main.python.youwuyu.EEG.Dataload.dataset import TrainEegDataset, TestEegDataset
+from Cpython.src.main.python.youwuyu.EEG.Dataload.deap_dataset import TrainEegDataset, TestEegDataset
 # from Cpython.main.EEG.Dataload.dataset import TrainEegDataset, TestEegDataset
 import torch
 train_dataset = TrainEegDataset()
