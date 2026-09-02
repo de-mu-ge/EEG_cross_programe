@@ -23,10 +23,6 @@ test_dataloader = DataLoader(test_dataset, batch_size=1, shuffle=False)
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 # from Cpython.mian.dataset.model import Moudle
 
-
-
-
-
 # --------------------- 获取模型 -------------------------
 from Cpython.src.main.python.youwuyu.EEG.model.model import Moudle
 model = Moudle()
@@ -36,12 +32,6 @@ model = Moudle()
 
 # from Cpython.src.main.python.youwuyu.EEG.model.test_model import DEAPNet
 # model = Model()
-
-
-
-
-
-
 
 model.train()
 model.to(device)

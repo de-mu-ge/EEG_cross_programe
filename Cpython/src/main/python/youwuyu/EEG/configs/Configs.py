@@ -15,7 +15,7 @@ class Config:
     cross_deap_cache_path: str = BASE_DIR / "Cpython/src/main/resources/cache/cross_deap_cache.npy"
 
     deap_eeg_pth_path : str = BASE_DIR / "Cpython/src/main/resources/model_out/deap_eeg_pth"
-    eav_eeg_pth_path : str = BASE_DIR / "Cpython/src/main/resources/model_out/eeg_pth/eav_eeg_pth"
+    eav_eeg_pth_path : str = BASE_DIR / "Cpython/src/main/resources/model_out/eeg_pth/eav_eeg.pth"
 
 
     lrs : float = 0.001
