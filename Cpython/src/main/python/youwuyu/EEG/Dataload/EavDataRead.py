@@ -27,9 +27,9 @@ def get_negative_label(label):
     """
     label = np.argmax(label, axis=-1)
     if label in [2, 3, 6, 7]:
-        return 1
+        return 0    # 消极
     else:
-        return 0
+        return 1        # 积极
 
 def data_read():
     if os.path.exists(cache_path):

@@ -23,7 +23,7 @@ class CrossDeapEavDataset(Dataset):     # 训练数据
 class TextCrossDeapEavDataset(Dataset):         # 测试数据
     def __init__(self):
         # self.data = torch.tensor(data_read() + cross_deap_read()).float()
-        self.data = cross_deap_read().tolist()[:40 * 3]
+        self.data = cross_deap_read().tolist()[:160 * 3]     # 使用deap数据集前120个数据
 
     def __len__(self):
         return len(self.data)
@@ -34,7 +34,7 @@ class TextCrossDeapEavDataset(Dataset):         # 测试数据
 class TrainExamCrossDeapEavDataset(Dataset):        # 训练集检验数据
     def __init__(self):
         # self.data = torch.tensor(data_read() + cross_deap_read()).float()
-        self.data =  cross_deap_read().tolist()[40 * 3 :-(40 * 24)]
+        self.data =  cross_deap_read().tolist()[160 * 3 : 160 * 6]     # 使用deap数据集(120：)个数据
 
     def __len__(self):
         return len(self.data)

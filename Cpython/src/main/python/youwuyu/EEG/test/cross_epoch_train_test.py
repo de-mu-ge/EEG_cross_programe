@@ -23,13 +23,14 @@ train_dataloader_iter = DataLoader(TrainExamCrossDeapEavDataset(), batch_size=1,
 test_dataloader = DataLoader(TextCrossDeapEavDataset(), batch_size=1, shuffle=False)
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-# from Cpython.mian.dataset.model import Moudle
 
 # --------------------- 获取模型 -------------------------
-from Cpython.src.main.python.youwuyu.EEG.model.cross_deap_eav_model import Model
-# model = Moudle()
-
-model = Model()
+# from Cpython.src.main.python.youwuyu.EEG.model.cross_deap_eav_model import Model
+# model = Model()
+from Cpython.src.main.python.youwuyu.EEG.model.cross_deap_eav_model import CrossModel
+# model = CrossModel()
+from Cpython.src.main.python.youwuyu.EEG.model.cross_deap_eav_model import  EEGClassifier
+model = EEGClassifier()
 
 model.train()
 model.to(device)
@@ -53,7 +54,7 @@ model.to(device)
 # weights = weights.to(device)
 
 optimizer = torch.optim.Adam(model.parameters(), lr=lrs, weight_decay=1e-3)
-criterion = torch.nn.CrossEntropyLoss()
+criterion = torch.nn.CrossEntropyLoss(torch.tensor([1, 4]).float().to(device))
 
 # print("模型训练开始")
 
@@ -141,6 +142,20 @@ for epoch in range(epochs):
                 #     true += 1
                 # else:
                 #     false += 1
+
+
+            # ------------测试------------
+            if i % 100 == 0:
+                print("模型输出")
+                print(out, label)
+            # ------------end--------------
+
+
+
+
+
+
+
 
             if label == out:
                 true += 1

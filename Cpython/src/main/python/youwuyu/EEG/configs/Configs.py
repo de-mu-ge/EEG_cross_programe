@@ -8,7 +8,7 @@ class Config:
     eav_name: str = "eav-dataset"
 
     deap_dataset_path: str = BASE_DIR / "Cpython/src/main/resources/dataset/deap-dataset/data_preprocessed_python"
-    eav_dataset_path : str = r"D:\pragrame\now\dataset"
+    eav_dataset_path : str = r"D:\pragrame\now\dataset" # 数据量过大
 
     deap_eeg_cache_path: str = BASE_DIR / "Cpython/src/main/resources/cache/deap_eeg_cache.npy"
     eav_eeg_cache_path: str = BASE_DIR / "Cpython/src/main/resources/cache/eav_eeg_cache.npy"

@@ -63,73 +63,74 @@ random.shuffle(path_list)
 
 def add_label(strs):
     if strs[-9] == 'A' or strs[-9] == 'S':
-        return 1    # 表示消极情绪
+        return 0    # 表示消极情绪
     else:
-        return 0    # 表示非消极情绪
+        return 1    # 表示非消极情绪
 
 
+if __name__ == "__main__":      # 为了方便获取数据路径
 
-# -------------- 一站式推理 -------------------
+    # -------------- 一站式推理 -------------------
 
-# for i in range(340):   # 8400
-for i in range(10):
-    play_list = []
+    # for i in range(340):   # 8400
+    for i in range(10):
+        play_list = []
 
-    num = 6
-    inputs = path_list[i*num:(i+1)*num]
-    for j in inputs:
-        # print(type(j))
-        # print(j)
+        num = 6
+        inputs = path_list[i*num:(i+1)*num]
+        for j in inputs:
+            # print(type(j))
+            # print(j)
 
-        valance = add_label(j)
-        cap = cv2.VideoCapture(j)
+            valance = add_label(j)
+            cap = cv2.VideoCapture(j)
 
-        for a in range(10):
+            for a in range(10):
 
-            # video_array = np.zeros([60,])
-            video_array = np.zeros(
-                (60, 480, 640, 3),
-                dtype=np.uint8
-            )
-            for b in range(60):
-                ret, frame = cap.read()     # 迭代取出
-                if not ret:
-                    break
+                # video_array = np.zeros([60,])
+                video_array = np.zeros(
+                    (60, 480, 640, 3),
+                    dtype=np.uint8
+                )
+                for b in range(60):
+                    ret, frame = cap.read()     # 迭代取出
+                    if not ret:
+                        break
 
-                frame = np.array(frame)
-                # print(frame.shape)
+                    frame = np.array(frame)
+                    # print(frame.shape)
 
-                video_array[b] = frame
+                    video_array[b] = frame
 
-            video_array = torch.from_numpy(video_array).float()
-            play_list.append(Play(valance, video_array))
+                video_array = torch.from_numpy(video_array).float()
+                play_list.append(Play(valance, video_array))
 
-        cap.release()
+            cap.release()
 
-    # --------------------------------------------------------
-    dataset = DataSet(play_list)
-    dataloader = DataLoader(dataset, batch_size=16, shuffle=True)
-    # dataset = None
+        # --------------------------------------------------------
+        dataset = DataSet(play_list)
+        dataloader = DataLoader(dataset, batch_size=16, shuffle=True)
+        # dataset = None
 
-    print("这是第几次训练:", i + 1)
-    for index, (data, label) in enumerate(dataloader):
-        data = data.to(device)
-        label = label.to(device)
-        optimizer.zero_grad()
-        out = model(data)
-        loss = criterion(out, label)
-        loss.backward()
-        optimizer.step()
+        print("这是第几次训练:", i + 1)
+        for index, (data, label) in enumerate(dataloader):
+            data = data.to(device)
+            label = label.to(device)
+            optimizer.zero_grad()
+            out = model(data)
+            loss = criterion(out, label)
+            loss.backward()
+            optimizer.step()
 
 
-        print(index, "批次", loss.item())
+            print(index, "批次", loss.item())
 
-    print("训练完成")
-    print("")
-    print("")
-    print("")
+        print("训练完成")
+        print("")
+        print("")
+        print("")
 
-torch.save(model.state_dict(), r"C:\Users\home and dream\Desktop\ing\EEG\Cpython\main\Video\out\pth\model.pth")
+    torch.save(model.state_dict(), r"C:\Users\home and dream\Desktop\ing\EEG\Cpython\main\Video\out\pth\model.pth")
 
 
 
