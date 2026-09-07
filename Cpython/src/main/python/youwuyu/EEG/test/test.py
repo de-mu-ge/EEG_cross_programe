@@ -16,11 +16,13 @@ def data_test():    # 数据测试
     print(l1)   # 标签为一的量    # 2.5 万
 
 if "__main__" == __name__:
-    # data_test()
+    # print(i1)
+    # print(l1)
+    data_test()
     # 47000
     # 25864
 
-    data = 1 / (25864 / 47000) * 2
-    print(data)
-    data = 1 / ((47000 -25864) / 47000) * 2
-    print(data)
+    # data = 1 / (25864 / 47000) * 2
+    # print(data)
+    # data = 1 / ((47000 -25864) / 47000) * 2
+    # print(data)

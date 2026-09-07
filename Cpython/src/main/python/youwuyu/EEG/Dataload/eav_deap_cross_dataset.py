@@ -12,7 +12,7 @@ print("loading data")
 class CrossDeapEavDataset(Dataset):     # 训练数据
     def __init__(self):
         # self.data = torch.tensor(data_read() + cross_deap_read()).float()
-        self.data = (data_read().tolist() + cross_deap_read().tolist()[40 * 3:])
+        self.data = (data_read().tolist() + cross_deap_read().tolist()[160 * 6:])
 
     def __len__(self):
         return len(self.data)

@@ -27,13 +27,26 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 # --------------------- 获取模型 -------------------------
 # from Cpython.src.main.python.youwuyu.EEG.model.cross_deap_eav_model import Model
 # model = Model()
-from Cpython.src.main.python.youwuyu.EEG.model.cross_deap_eav_model import CrossModel
+# from Cpython.src.main.python.youwuyu.EEG.model.cross_deap_eav_model import CrossModel
 # model = CrossModel()
-from Cpython.src.main.python.youwuyu.EEG.model.cross_deap_eav_model import  EEGClassifier
-model = EEGClassifier()
+# from Cpython.src.main.python.youwuyu.EEG.model.cross_deap_eav_model import  EEGClassifier
+# model = EEGClassifier()
+
+from Cpython.src.main.python.youwuyu.EEG.model.transformer_deap_eav_cross_model import EEGModel
+model = EEGModel()
 
 model.train()
 model.to(device)
+
+# -----------真实评价标准--------------
+class ExamNum:
+    def __init__(self):
+        self.num = 0    # 总数
+        self.net = 0
+        self.true = 0
+        self.net_true = 0
+        # self.pos = 0
+        # self.neg = 0
 
 
 # class_counts = torch.tensor([       # 加权
@@ -54,12 +67,13 @@ model.to(device)
 # weights = weights.to(device)
 
 optimizer = torch.optim.Adam(model.parameters(), lr=lrs, weight_decay=1e-3)
-criterion = torch.nn.CrossEntropyLoss(torch.tensor([1, 4]).float().to(device))
+criterion = torch.nn.CrossEntropyLoss()
 
 # print("模型训练开始")
 
-train_mat = []
-test_mat = []
+# train_mat = []
+# test_mat = []
+exam_num_list = []
 
 for epoch in range(epochs):
 
@@ -92,29 +106,100 @@ for epoch in range(epochs):
 
         # break
 
+    print("")
+    print("")
+    print("epoch:", epoch)
     print("loss:", items / len(train_dataloader))
 
     model.eval()
 
-    result = []
+    # result = []
+
 
     for data in [train_dataloader_iter, test_dataloader]:
 
-        true = 0        # 重新积累
-        false = 0
-        index = 0
+        # true = 0        # 重新积累
+        # false = 0
+        # index = 0
+        exam_num = ExamNum()
 
-        for i, (inputs, label) in enumerate(data):
-            index += 1
-            inputs, label = inputs.to(device), label.to(device)
+        for i, (inputs, labels) in enumerate(data):
+            # index += 1
+            exam_num.num += 1   # 计数器+=1
 
-            out = model(inputs)
-            out = out.cpu().detach().numpy()
-            out = np.argmax(out, axis=1).tolist()[0]
+            inputs, labels = inputs.to(device), labels.to(device)
+
+            outputs = model(inputs)
+            outputs = outputs.cpu().detach().numpy()
+            outputs = np.argmax(outputs, axis=1).tolist()[0]
 
             # print(type(label))
             # print(label)
-            label = int(label)
+            labels = int(labels)
+
+
+            if labels == 0:
+                exam_num.net += 1  # 消极计数加一
+                if outputs == labels:
+                    exam_num.net_true += 1
+
+            if outputs == labels:
+                exam_num.true += 1  # 预测正确加一
+
+
+        # 由于生理层面的漏报的损失远大于误报，采用负面召回率
+        exam_net_true_nums = exam_num.net_true / exam_num.net       # 医学负面召回率
+        exam_true_num = exam_num.true / exam_num.num        # 全局准确率
+
+        # print("epoch:", epoch)
+        print("训练集 / 测试集:")
+        print("召回率:", exam_net_true_nums)
+        print("准确率:", exam_true_num)
+
+        exam_num_list.append(exam_net_true_nums)      # 叠加
+        exam_num_list.append(exam_true_num)
+
+
+
+print(exam_num_list[0::4])
+print(exam_num_list[2::4])
+
+plt.plot(exam_num_list[0::4])
+plt.plot(exam_num_list[2::4])
+plt.show()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             # print("label的结构 ")
             # print(label)
             # break
@@ -145,9 +230,9 @@ for epoch in range(epochs):
 
 
             # ------------测试------------
-            if i % 100 == 0:
-                print("模型输出")
-                print(out, label)
+            # if i % 100 == 0:
+            #     print("模型输出")
+            #     print(out, label)
             # ------------end--------------
 
 
@@ -157,27 +242,22 @@ for epoch in range(epochs):
 
 
 
-            if label == out:
-                true += 1
-            else:
-                false += 1
+    #         if label == out:
+    #             true += 1
+    #         else:
+    #             false += 1
+    #
+    #     result.append(true / index)
+    #
+    # train_mat.append(result[0])
+    # test_mat.append(result[1])
+    #
+    # print("训练集结果:", result[0])
+    # print("测试集结果:", result[1])
+    # print('')
+    # print('')
+    # print('')
 
-        result.append(true / index)
-
-    train_mat.append(result[0])
-    test_mat.append(result[1])
-
-    print("训练集结果:", result[0])
-    print("测试集结果:", result[1])
-    print('')
-    print('')
-    print('')
 
 
-print(train_mat)
-print(test_mat)
-
-plt.plot(train_mat)
-plt.plot(test_mat)
-plt.show()
 

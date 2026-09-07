@@ -16,8 +16,8 @@ class EavPlay:
 
 def get_negative_label(label):
     """
-    0 = 非消极
-    1 = 消极
+    0 = 消极
+    1 = 积极
 
     消极：
     2 = 愤怒（听）
@@ -29,7 +29,7 @@ def get_negative_label(label):
     if label in [2, 3, 6, 7]:
         return 0    # 消极
     else:
-        return 1        # 积极
+        return 1    # 积极
 
 def data_read():
     if os.path.exists(cache_path):
