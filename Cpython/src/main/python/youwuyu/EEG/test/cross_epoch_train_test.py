@@ -35,7 +35,7 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 from Cpython.src.main.python.youwuyu.EEG.model.transformer_deap_eav_cross_model import EEGModel
 model = EEGModel()
 
-model.train()
+# model.train()
 model.to(device)
 
 # -----------真实评价标准--------------
@@ -76,6 +76,8 @@ criterion = torch.nn.CrossEntropyLoss()
 exam_num_list = []
 
 for epoch in range(epochs):
+
+    model.train()   # 找到模型学习不动的原因,忘记改回train()
 
     print("Epoch [{}/{}]".format(epoch + 1, epochs))
     # print("是否有进循环")
