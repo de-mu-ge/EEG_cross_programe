@@ -6,11 +6,11 @@ from Cpython.src.main.python.youwuyu.EEG.configs.Configs import Config
 lrs = Config().lrs
 # epochs = Config().epochs
 epochs = 5
-cross_deap_eav_pth_path = Config().deap_eeg_pth_path
+cross_deap_eav_pth_path = Config().cross_deap_eav_pth_path
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-from Cpython.src.main.python.youwuyu.EEG.model.cross_deap_eav_model import Model
-model = Model()
+from Cpython.src.main.python.youwuyu.EEG.model.transformer_deap_eav_cross_model import EEGModel
+model = EEGModel()
 model = model.to(device)
 
 criterion = nn.CrossEntropyLoss()
