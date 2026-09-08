@@ -18,7 +18,7 @@ class Config:
     eav_eeg_pth_path : str = BASE_DIR / "Cpython/src/main/resources/model_out/eeg_pth/eav_eeg.pth"
     cross_deap_eav_pth_path : str = BASE_DIR / "Cpython/src/main/resources/model_out/eeg_pth/cross_eav_deap_eeg.pth"
 
-    cross_deap_eav_pth_onnx_path : str = BASE_DIR / "Cpython/src/main/resources/model_out/onnx/cross_eav_deap_eeg.pth"
+    cross_deap_eav_pth_onnx_path : str = BASE_DIR / "Cpython/src/main/resources/model_out/onnx/cross_eav_deap_eeg.onnx"
 
     lrs : float = 0.001
     epochs: int = 40

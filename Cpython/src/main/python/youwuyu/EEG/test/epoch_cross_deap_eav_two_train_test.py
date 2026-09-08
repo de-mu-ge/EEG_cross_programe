@@ -13,13 +13,16 @@ from torch.utils.data import DataLoader
 # from Cpython.mian.dataset.dataset import TrainEegDataset, TestEegDataset
 # from Cpython.mian.dataset.DataRead import Play
 from Cpython.src.main.python.youwuyu.EEG.Dataload.eav_deap_cross_dataset import CrossDeapEavDataset, TextCrossDeapEavDataset, TrainExamCrossDeapEavDataset
+from Cpython.src.main.python.youwuyu.EEG.Dataload.eav_deap_cross_dataset import TrainExamCrossEavDataset
 # from Cpython.main.EEG.Dataload.dataset import TrainEegDataset, TestEegDataset
 import torch
 # train_dataset = CrossDeapEavDataset()
 # test_dataset = TextCrossDeapEavDataset()
 
 train_dataloader = DataLoader(CrossDeapEavDataset(), batch_size=64, shuffle=True)
-train_dataloader_iter = DataLoader(TrainExamCrossDeapEavDataset(), batch_size=1, shuffle=False)
+# train_dataloader_iter = DataLoader(TrainExamCrossDeapEavDataset(), batch_size=1, shuffle=False)
+train_dataloader_iter = DataLoader(TrainExamCrossEavDataset(), batch_size=1, shuffle=False)
+
 test_dataloader = DataLoader(TextCrossDeapEavDataset(), batch_size=1, shuffle=False)
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")

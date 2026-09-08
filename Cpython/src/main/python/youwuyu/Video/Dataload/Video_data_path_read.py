@@ -33,7 +33,7 @@ random.shuffle(path_list)
 #         input_list.append(i[o])
 
 def add_label(strs):        #标签
-    if strs[-9] == 'A' or strs[-9] == 'S':
-        return 1    # 表示消极情绪
+    if strs[-9] == 'A' or strs[-9] == 'd':
+        return 0    # 表示消极情绪
     else:
-        return 0    # 表示非消极情绪
+        return 1    # 表示非消极情绪
